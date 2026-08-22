@@ -1212,6 +1212,23 @@
             </div>
           </div>
         </div>
+
+        <!-- Edit Profile Image & Resume PDF -->
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-purple); border-radius: 14px; padding: 1.5rem;">
+          <h4 style="font-family: var(--font-title); font-size: 1.1rem; color: var(--purple-accent); margin-bottom: 1rem;">6. Upload & Change Profile Photo & Resume PDF</h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div>
+              <label class="form-label">Profile Image (Choose File or Enter URL)</label>
+              <input type="file" id="portal-img-file" accept="image/*" class="form-input" style="margin-bottom: 0.5rem;" />
+              <input type="text" id="portal-img-url" class="form-input" placeholder="./profile.jpg or https://..." value="./profile.jpg" />
+            </div>
+            <div>
+              <label class="form-label">Resume PDF (Choose File or Enter URL)</label>
+              <input type="file" id="portal-pdf-file" accept="application/pdf" class="form-input" style="margin-bottom: 0.5rem;" />
+              <input type="text" id="portal-pdf-url" class="form-input" placeholder="./Kishorekumar_KT_Resume.pdf or https://..." value="./Kishorekumar_KT_Resume.pdf" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
