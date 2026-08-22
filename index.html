@@ -1094,7 +1094,7 @@
 
         <div class="form-group">
           <label class="form-label">Password</label>
-          <input type="password" id="portal-pass-input" required class="form-input" placeholder="Enter password (qazwsxedc)..." />
+          <input type="password" id="portal-pass-input" required class="form-input" placeholder="Enter password..." />
         </div>
 
         <div id="admin-portal-error" style="color: #ef4444; font-size: 0.85rem; margin-bottom: 1rem; display: none; text-align: center; font-weight: 600;">
@@ -1110,10 +1110,10 @@
 
   <!-- Admin Live Control Panel Modal -->
   <div id="admin-control-portal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(10, 5, 24, 0.94); backdrop-filter: blur(20px); display: none; align-items: center; justify-content: center; z-index: 100002; padding: 1.5rem;">
-    <div style="width: 100%; max-width: 880px; height: 85vh; background: #120827; border: 1.5px solid var(--purple-accent); border-radius: 20px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 60px rgba(118, 60, 172, 0.5);">
+    <div style="width: 100%; max-width: 920px; height: 88vh; background: #120827; border: 1.5px solid var(--purple-accent); border-radius: 20px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 60px rgba(118, 60, 172, 0.5);">
       
       <!-- Panel Header -->
-      <div style="padding: 1.25rem 2rem; background: rgba(10, 5, 24, 0.98); border-bottom: 1px solid var(--border-purple); display: flex; justify-content: space-between; align-items: center;">
+      <div style="padding: 1.25rem 2rem; background: rgba(10, 5, 24, 0.98); border-bottom: 1px solid var(--border-purple); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
         <div>
           <div style="font-family: var(--font-title); font-weight: 800; font-size: 1.25rem; color: #ffffff; display: flex; align-items: center; gap: 0.5rem;">
             ⚙️ Full Website Live Content Manager
@@ -1121,7 +1121,10 @@
           <div style="font-size: 0.8rem; color: var(--purple-accent);">Authenticated as: kishorekumarkt3@gmail.com</div>
         </div>
         
-        <div style="display: flex; gap: 1rem; align-items: center;">
+        <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+          <button id="toggle-live-editable" class="btn-outline-purple" style="padding: 0.6rem 1rem; font-size: 0.85rem; border-color: #facc15; color: #facc15; cursor: pointer;">
+            ✏️ Enable Click-to-Edit Mode
+          </button>
           <button id="save-portal-changes" class="btn-purple" style="padding: 0.6rem 1.2rem; font-size: 0.85rem; cursor: pointer;">
             💾 Save & Publish Changes
           </button>
