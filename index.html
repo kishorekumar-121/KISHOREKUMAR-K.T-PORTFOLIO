@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="KISHOREKUMAR K.T - ECE Student & Co-ordinator Personal Portfolio Website" />
+  <title>KISHOREKUMAR K.T // PORTFOLIO</title>
+  
+  <script>
+    window.openAdminModal = function() {
+      var m = document.getElementById('admin-login-modal');
+      var c = document.getElementById('admin-control-modal');
+      if (localStorage.getItem('admin_authenticated') === 'true') {
+        if (c) c.style.display = 'flex';
+      } else {
+        if (m) m.style.display = 'flex';
+      }
+    };
+
+    window.closeAdminModal = function() {
+      var m = document.getElementById('admin-login-modal');
+      var c = document.getElementById('admin-control-modal');
+      var err = document.getElementById('admin-login-error');
+      if (m) m.style.display = 'none';
+      if (c) c.style.display = 'none';
+      if (err) err.style.display = 'none';
+    };
+  </script>
+
+  <style>
+    /* ==========================================================================
+       GSPRADEEP.VERCEL.APP INSPIRED DARK VIOLET CYBER AESTHETIC
+       ========================================================================== */
+    :root {
+      --bg-main: #0a0518;
+      --bg-card: rgba(18, 8, 39, 0.75);
+      --purple-primary: #763CAC;
+      --purple-secondary: #320F85;
+      --purple-accent: #CBACF9;
+      --border-purple: rgba(118, 60, 172, 0.35);
+      --text-white: #ffffff;
+      --text-muted: #94a3b8;
+      --font-title: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-main);
+      color: var(--text-white);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-main);
+      position: relative;
+    }
+
+    /* Ambient Background Radial Glows */
+    .ambient-glow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(118, 60, 172, 0.18) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(50, 15, 133, 0.22) 0%, transparent 60%),
+        radial-gradient(circle at 50% 90%, rgba(203, 172, 249, 0.08) 0%, transparent 40%);
+    }
+
+    /* Custom Cursor */
+    .custom-cursor {
+      position: fixed;
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--purple-accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.08s linear, width 0.2s ease, height 0.2s ease, background 0.2s ease;
+      box-shadow: 0 0 15px rgba(203, 172, 249, 0.5);
+    }
+    .custom-cursor.hovering {
+      width: 44px;
+      height: 44px;
+      background: rgba(118, 60, 172, 0.2);
+      border-color: #ffffff;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0a0518;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, var(--purple-primary), var(--purple-secondary));
+      border-radius: 4px;
+    }
+
+    /* Navbar */
+    .navbar-wrapper {
+      position: fixed;
+      top: 1.25rem;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      z-index: 1000;
+      padding: 0 1.5rem;
+    }
+
+    .navbar {
+      width: 100%;
+      max-width: 1100px;
+      background: rgba(26, 11, 46, 0.85);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-purple);
+      padding: 0.85rem 2rem;
+      border-radius: 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .nav-logo {
+      font-family: var(--font-title);
+      font-size: 1.3rem;
+      font-weight: 900;
+      background: linear-gradient(90deg, #CBACF9, #763CAC);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      color: #d1d5db;
+      text-decoration: none;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: #ffffff;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: linear-gradient(90deg, #CBACF9, #763CAC);
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      min-height: 100vh;
+      padding-top: 8.5rem;
+      padding-bottom: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-container {
+      max-width: 1200px;
+      width: 90%;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    .hero-greeting {
+      font-family: var(--font-title);
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.25rem;
+    }
+
+    .hero-name {
+      font-family: var(--font-title);
+      font-size: 4rem;
+      font-weight: 900;
+      line-height: 1.05;
+      background: linear-gradient(135deg, #CBACF9 0%, #9333ea 50%, #320F85 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.75rem;
+      letter-spacing: -1.5px;
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-title);
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-bottom: 1.75rem;
+    }
+
+    .btn-resume {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.9rem 1.8rem;
+      background: transparent;
+      border: 1px solid rgba(203, 172, 249, 0.4);
+      color: #ffffff;
+      font-family: var(--font-title);
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-resume:hover {
+      background: rgba(118, 60, 172, 0.3);
+      border-color: var(--purple-accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(118, 60, 172, 0.3);
+    }
+
+    /* Terminal Mockup Component (gspradeep style) */
+    .terminal-card {
+      background: rgba(18, 9, 36, 0.9);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-purple);
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+    }
+
+    .terminal-header {
+      background: rgba(10, 5, 24, 0.8);
+      border-bottom: 1px solid var(--border-purple);
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #eab308; }
+    .dot-green { background: #22c55e; }
+
+    .terminal-path {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-left: 0.5rem;
+    }
+
+    .terminal-body {
+      padding: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .t-prompt {
+      color: var(--purple-accent);
+      font-size: 0.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .t-green { color: #4ade80; }
+    .t-blue { color: #60a5fa; }
+    .t-yellow { color: #facc15; }
+
+    .t-cursor {
+      display: inline-block;
+      width: 8px;
+      height: 16px;
+      background: #4ade80;
+      animation: blink 1s infinite;
+      vertical-align: middle;
+      margin-left: 4px;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Section Headers */
+    .section {
+      padding: 5rem 0;
+      position: relative;
+      z-index: 1;
+      scroll-margin-top: 100px;
+    }
+
+    .section-title-gradient {
+      text-align: center;
+      font-family: var(--font-title);
+      font-size: 3.2rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #763CAC 0%, #320F85 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 3.5rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .container {
+      max-width: 1140px;
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    /* About Section */
+    .about-flex {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    .profile-img-frame {
+      width: 320px;
+      height: 320px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 2px solid var(--border-purple);
+      background: var(--bg-card);
+      box-shadow: 0 15px 40px rgba(118, 60, 172, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1.5rem;
+      margin: 0 auto;
+    }
+
+    .about-text-content {
+      font-size: 1.15rem;
+      color: #cbd5e1;
+      line-height: 1.8;
+    }
+
+    .about-buttons {
+      display: flex;
+      gap: 1.2rem;
+      margin-top: 2rem;
+    }
+
+    .btn-purple {
+      padding: 0.85rem 1.8rem;
+      background: linear-gradient(135deg, #763CAC, #320F85);
+      color: #ffffff;
+      font-family: var(--font-title);
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-purple:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(118, 60, 172, 0.4);
+    }
+
+    .btn-outline-purple {
+      padding: 0.85rem 1.8rem;
+      border: 1px solid var(--purple-primary);
+      color: #ffffff;
+      font-family: var(--font-title);
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-outline-purple:hover {
+      background: linear-gradient(135deg, #763CAC, #320F85);
+      transform: translateY(-2px);
+    }
+
+    /* Education Section */
+    .edu-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .edu-card {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-purple);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease;
+    }
+
+    .edu-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--purple-accent);
+    }
+
+    .edu-college-title {
+      font-family: var(--font-title);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.4rem;
+    }
+
+    .edu-dept {
+      font-family: var(--font-title);
+      font-size: 1.1rem;
+      color: var(--purple-accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .edu-meta-flex {
+      display: flex;
+      gap: 2rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    /* Skills Infinite Marquee */
+    .marquee-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      overflow: hidden;
+      padding: 1rem 0;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 1.5rem;
+      width: max-content;
+    }
+
+    .scroll-left {
+      animation: scrollLeft 28s linear infinite;
+    }
+
+    .scroll-right {
+      animation: scrollRight 28s linear infinite;
+    }
+
+    @keyframes scrollLeft {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @keyframes scrollRight {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(0); }
+    }
+
+    .skill-box {
+      min-width: 140px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-purple);
+      border-radius: 14px;
+      padding: 1.2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      transition: transform 0.3s ease;
+    }
+
+    .skill-box:hover {
+      transform: scale(1.08);
+      border-color: var(--purple-accent);
+    }
+
+    .skill-icon-emoji {
+      font-size: 2rem;
+    }
+
+    .skill-name {
+      font-family: var(--font-title);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    /* Projects Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .project-card {
+      background: #120827;
+      border: 1px solid var(--border-purple);
+      border-radius: 20px;
+      padding: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transition: all 0.35s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--purple-accent);
+      box-shadow: 0 15px 40px rgba(118, 60, 172, 0.3);
+    }
+
+    .project-card-title {
+      font-family: var(--font-title);
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .project-card-desc {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+
+    .tech-pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tech-pill {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+      color: var(--purple-accent);
+      background: rgba(118, 60, 172, 0.15);
+      border: 1px solid var(--border-purple);
+    }
+
+    .project-card-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      color: var(--purple-accent);
+      border: 1px solid var(--border-purple);
+      background: rgba(118, 60, 172, 0.1);
+      text-decoration: none;
+      transition: all 0.25s ease;
+      width: fit-content;
+    }
+
+    .project-card-btn:hover {
+      background: var(--purple-primary);
+      color: #ffffff;
+    }
+
+    /* Contact Section */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .contact-social-flex {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .contact-social-item {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-purple);
+      padding: 1.25rem 1.75rem;
+      border-radius: 16px;
+      text-decoration: none;
+      color: #ffffff;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .contact-social-item:hover {
+      transform: translateY(-4px);
+      border-color: var(--purple-accent);
+    }
+
+    .social-icon-circle {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(118, 60, 172, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+    }
+
+    .contact-form-box {
+      background: rgba(18, 8, 39, 0.85);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-purple);
+      border-radius: 20px;
+      padding: 2.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+      display: block;
+      font-family: var(--font-title);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      border: 1px solid var(--border-purple);
+      border-radius: 10px;
+      outline: none;
+      background: rgba(10, 5, 24, 0.6);
+      color: #ffffff;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-input:focus {
+      border-color: var(--purple-accent);
+      box-shadow: 0 0 15px rgba(203, 172, 249, 0.2);
+    }
+
+    /* Scroll Reveal Animations */
+    .reveal-on-scroll {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    /* Responsive Rules */
+    @media (max-width: 900px) {
+      .hero-container,
+      .about-flex,
+      .contact-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero-name {
+        font-size: 2.8rem;
+      }
+      .nav-links {
+        gap: 1rem;
+        font-size: 0.85rem;
+      }
+      .about-buttons {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Always-Visible Floating Admin Panel Button -->
+  <button id="floating-admin-btn" onclick="window.openAdminModal()" style="position: fixed; bottom: 25px; right: 25px; z-index: 99999; padding: 0.75rem 1.4rem; background: linear-gradient(135deg, #763CAC, #320F85); color: #ffffff; font-family: var(--font-title); font-weight: 800; font-size: 0.9rem; border: 1.5px solid var(--purple-accent); border-radius: 50px; box-shadow: 0 8px 30px rgba(118, 60, 172, 0.6); cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: transform 0.2s ease;">
+    🔐 Admin Panel
+  </button>
+
+  <!-- Ambient Glow Background -->
+  <div class="ambient-glow"></div>
+
+  <!-- Custom Cursor -->
+  <div class="custom-cursor" id="custom-cursor"></div>
+
+  <!-- Navbar -->
+  <div class="navbar-wrapper">
+    <nav class="navbar">
+      <a href="#home" class="nav-logo">KISHOREKUMAR K.T</a>
+
+      <ul class="nav-links">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#education" class="nav-link">Education</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li><button id="open-admin-btn" onclick="window.openAdminModal()" class="nav-link" style="background:none; border:none; cursor:pointer; color:var(--purple-accent); font-weight:700;">🔐 Admin</button></li>
+      </ul>
+    </nav>
+  </div>
+
+  <main>
+    <!-- 1. Hero Section with Interactive Terminal Mockup -->
+    <section id="home" class="hero-section">
+      <div class="hero-container">
+        <div class="reveal-on-scroll">
+          <div style="display:flex; align-items:center; gap:1.25rem; margin-bottom:1rem; flex-wrap:wrap;">
+            <div style="width:90px; height:90px; border-radius:50%; overflow:hidden; border:3px solid var(--purple-accent); box-shadow:0 0 25px rgba(203,172,249,0.45); flex-shrink:0;">
+              <img src="./profile.jpg" alt="Kishorekumar K.T" style="width:100%; height:100%; object-fit:cover;" />
+            </div>
+            <div>
+              <div class="hero-greeting">Hi, I'm</div>
+              <h1 class="hero-name" style="margin-bottom:0;">KISHOREKUMAR K.T</h1>
+            </div>
+          </div>
+          <h2 class="hero-subtitle">ECE Student & Co-ordinator | Web Developer</h2>
+
+          <div style="margin-top: 1.75rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+            <!-- METHOD 1: VIEW RESUME (Opens PDF in Browser Tab / Modal) -->
+            <a href="./Kishorekumar_KT_Resume.pdf" target="_blank" rel="noopener" id="view-resume-btn" class="btn-resume" style="background: linear-gradient(135deg, #763CAC, #320F85);">
+              <span>👁️</span> View Resume
+            </a>
+
+            <!-- METHOD 2: DOWNLOAD RESUME (Triggers Direct File Download) -->
+            <a href="./Kishorekumar_KT_Resume.pdf" download="Kishorekumar_KT_Resume.pdf" class="btn-resume">
+              <span>📥</span> Download Resume
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Side Terminal Mockup Component -->
+        <div class="reveal-on-scroll">
+          <div class="terminal-card">
+            <div class="terminal-header">
+              <div class="dot dot-red"></div>
+              <div class="dot dot-yellow"></div>
+              <div class="dot dot-green"></div>
+              <span class="terminal-path">~/portfolio (kishorekumarkt)</span>
+            </div>
+
+            <div class="terminal-body">
+              <div class="t-prompt">➜ ~/portfolio</div>
+              <div class="t-green">✔ Web Developer</div>
+              <div class="t-green">✔ ECE Student & Co-ordinator</div>
+              <div class="t-green">✔ Problem Solver & Tech Enthusiast</div>
+              
+              <div style="margin-top: 0.5rem;" class="t-blue">→ HTML / CSS / JavaScript</div>
+              <div class="t-blue">→ Java / Python / MySQL</div>
+              <div class="t-blue">→ Git / GitHub / VS Code</div>
+
+              <div style="margin-top: 0.5rem;" class="t-yellow">→ VSB Engineering College, Karur</div>
+
+              <div style="margin-top: 0.75rem;">
+                <span style="color:#94a3b8">$</span><span class="t-cursor"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. About Me Section -->
+    <section id="about" class="section">
+      <div class="container">
+        <h2 class="section-title-gradient reveal-on-scroll">ABOUT ME</h2>
+
+        <div class="about-flex">
+          <div class="reveal-on-scroll">
+            <div class="profile-img-frame" style="padding:0; overflow:hidden;">
+              <img src="./profile.jpg" alt="Kishorekumar K.T" style="width:100%; height:100%; object-fit:cover; border-radius:24px;" />
+            </div>
+          </div>
+
+          <div class="about-text-content reveal-on-scroll">
+            <h3 style="font-family: var(--font-title); font-size: 2rem; font-weight: 800; color: #ffffff; margin-bottom: 1rem;">
+              Hi I'm KISHOREKUMAR K.T
+            </h3>
+            
+            <p>
+              I'm KISHOREKUMAR K.T, a third-year Electronics and Communication Engineering student at VSB Engineering College, Karur. I'm passionate about web development, technology, and building practical solutions. I enjoy developing user-friendly applications and exploring new technologies while continuously improving my technical skills.
+            </p>
+
+            <div class="about-buttons">
+              <a href="#projects" class="btn-purple">Projects ⚡</a>
+              <a href="#contact" class="btn-outline-purple">Contact Me 📧</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Education Section -->
+    <section id="education" class="section">
+      <div class="container">
+        <h2 class="section-title-gradient reveal-on-scroll">EDUCATION</h2>
+
+        <div class="edu-stack">
+          <!-- College Card -->
+          <div class="edu-card reveal-on-scroll">
+            <h3 class="edu-college-title">V.S.B ENGINEERING COLLEGE KARUR</h3>
+            <div class="edu-dept">B.E. Electronics and Communication Engineering</div>
+            
+            <div class="edu-meta-flex">
+              <div><strong>CGPA:</strong> 7.5 / 10</div>
+              <div><strong>Status:</strong> Third Year (2024 - 2028)</div>
+              <div><strong>Location:</strong> Karur, Tamil Nadu</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Skills Infinite Marquee Section -->
+    <section id="skills" class="section">
+      <div class="container">
+        <h2 class="section-title-gradient reveal-on-scroll">SKILLS</h2>
+
+        <div class="marquee-container reveal-on-scroll">
+          <!-- Row 1: Left Scroll -->
+          <div class="marquee-track scroll-left">
+            <div class="skill-box"><span class="skill-icon-emoji">🐍</span><span class="skill-name">Python</span></div>
+            <div class="skill-box"><span class="skill-icon-emoji">☕</span><span class="skill-name">Java</span></div>
+            <div class="skill-box"><span class="skill-icon-emoji">🌐</span><span class="skill-name">HTML</span></div>
+            <div class="skill-box"><span class="skill-icon-emoji">🎨</span><span class="skill-name">CSS</span></div>
+            <div class="skill-box"><span class="skill-icon-emoji">⚡</span><span class="skill-name">JavaScript</span></div>
+            <div class="skill-box"><span class="skill-icon-emoji">🐬</span><span class="skill-name">MySQL</span></div>
+            <div class="skill-box"><span class="skill-icon-emoji">📦</span><span class="skill-name">Git</span></div>
+            <div class="skill-box"><span class="skill-icon-emoji">🐙</span><span class="skill-name">GitHub</span></div>
+            <div class="skill-box"><span class="skill-icon-emoji">💻</span><span class="skill-name">VS Code</span></div>
+            <!-- Duplicate loop items -->
+            <div class="skill-box"><span class="skill-icon-emoji">🐍</span><span class="skill-name">Python</span></div>
+            <div class="skill-box"><span class="skill-icon-emoji">☕</span><span class="skill-name">Java</span></div>
+            <div class="skill-box"><span class="skill-icon-emoji">🌐</span><span class="skill-name">HTML</span></div>
+            <div class="skill-box"><span class="skill-icon-emoji">🎨</span><span class="skill-name">CSS</span></div>
+            <div class="skill-box"><span class="skill-icon-emoji">⚡</span><span class="skill-name">JavaScript</span></div>
+            <div class="skill-box"><span class="skill-icon-emoji">🐬</span><span class="skill-name">MySQL</span></div>
+          </div>
+
+          <!-- Row 2: Right Scroll -->
+          <div class="marquee-track scroll-right">
+            <div class="skill-box"><span class="skill-icon-emoji">🎬</span><span class="skill-name">Video Editing</span></div>
+            <div class="skill-box"><span class="skill-icon-emoji">⚛️</span><span class="skill-name">React JS</span></div>
+            <div class="skill-box"><span class="skill-icon-emoji">📡</span><span class="skill-name">ECE Systems</span></div>
+            <div class="skill-box"><span class="skill-icon-emoji">🚚</span><span class="skill-name">Agri Logistics</span></div>
+            <div class="skill-box"><span class="skill-icon-emoji">🎬</span><span class="skill-name">Video Editing</span></div>
+            <div class="skill-box"><span class="skill-icon-emoji">⚛️</span><span class="skill-name">React JS</span></div>
+            <div class="skill-box"><span class="skill-icon-emoji">📡</span><span class="skill-name">ECE Systems</span></div>
+            <div class="skill-box"><span class="skill-icon-emoji">🚚</span><span class="skill-name">Agri Logistics</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Projects Section -->
+    <section id="projects" class="section">
+      <div class="container">
+        <h2 class="section-title-gradient reveal-on-scroll">PROJECTS</h2>
+
+        <div class="projects-grid">
+          <!-- Main Project: Smart Agri Transport Management System -->
+          <div class="project-card reveal-on-scroll">
+            <h3 class="project-card-title">Smart Agri Transport Management System</h3>
+            <p class="project-card-desc">
+              A web-based smart transportation management system designed to help farmers efficiently track and manage the transportation of agricultural crops from farms to their destinations. The system provides a tracking mechanism that improves transportation visibility and helps farmers manage crop movement more efficiently.
+            </p>
+
+            <div class="tech-pill-list">
+              <span class="tech-pill">Role: Web Developer</span>
+              <span class="tech-pill">Crop Tracking System</span>
+              <span class="tech-pill">HTML / CSS / JS</span>
+            </div>
+
+            <!-- Project Links -->
+            <div style="display:flex; gap:1rem; margin-top: auto;">
+              <a href="https://smart-agri-transport-management1.vercel.app/" target="_blank" rel="noopener" class="project-card-btn">🌐 Live Demo</a>
+              <a href="https://github.com/kishorekumar-121" target="_blank" rel="noopener" class="project-card-btn">🐙 GitHub Repo</a>
+            </div>
+          </div>
+
+          <!-- Academic Project 2: Line Follower Robot -->
+          <div class="project-card reveal-on-scroll">
+            <h3 class="project-card-title">Line Follower Robot</h3>
+            <p class="project-card-desc">
+              Developed an autonomous simple line-following robot using IR sensors and DC gear motors for path tracking navigation.
+            </p>
+
+            <div class="tech-pill-list">
+              <span class="tech-pill">IR Sensors</span>
+              <span class="tech-pill">DC Motors</span>
+              <span class="tech-pill">Robotics</span>
+            </div>
+          </div>
+
+          <!-- Academic Project 3: Bluetooth Control RC Car -->
+          <div class="project-card reveal-on-scroll">
+            <h3 class="project-card-title">Bluetooth Control RC Car</h3>
+            <p class="project-card-desc">
+              Constructed a remote-controlled vehicle using LF2 carrier model board, gear motors, Bluetooth HC-05 module, lithium-ion battery, and Arduino Uno microcontrollers to process sensor data and motor functionality.
+            </p>
+
+            <div class="tech-pill-list">
+              <span class="tech-pill">Arduino Uno</span>
+              <span class="tech-pill">Bluetooth Module</span>
+              <span class="tech-pill">Embedded Systems</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Contact Me Section -->
+    <section id="contact" class="section">
+      <div class="container">
+        <h2 class="section-title-gradient reveal-on-scroll">CONTACT ME</h2>
+
+        <div class="contact-grid">
+          <div class="contact-social-flex reveal-on-scroll">
+            <h3 style="font-family: var(--font-title); font-size: 1.8rem; font-weight: 800; color: #ffffff; margin-bottom: 0.5rem;">
+              Social Media
+            </h3>
+            <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 1rem;">
+              Connect with me on my social platforms. Let's build something amazing together!
+            </p>
+
+            <a href="mailto:kishorekumarkt3@gmail.com" class="contact-social-item">
+              <div class="social-icon-circle">📧</div>
+              <div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">EMAIL</div>
+                <div style="font-weight: 600; color: #ffffff;">kishorekumarkt3@gmail.com</div>
+              </div>
+            </a>
+
+            <a href="https://www.linkedin.com/in/kishorekumar-k-t-568738378/" target="_blank" rel="noopener" class="contact-social-item">
+              <div class="social-icon-circle">💼</div>
+              <div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">LINKEDIN</div>
+                <div style="font-weight: 600; color: #ffffff;">KISHOREKUMAR K.T</div>
+              </div>
+            </a>
+
+            <a href="https://github.com/kishorekumar-121" target="_blank" rel="noopener" class="contact-social-item">
+              <div class="social-icon-circle">🐙</div>
+              <div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">GITHUB</div>
+                <div style="font-weight: 600; color: #ffffff;">kishorekumar-121</div>
+              </div>
+            </a>
+          </div>
+
+          <!-- Contact Form -->
+          <div class="contact-form-box reveal-on-scroll">
+            <form id="contact-form">
+              <div class="form-group">
+                <label class="form-label">Your Name</label>
+                <input type="text" required class="form-input" placeholder="Type your name..." />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" required class="form-input" placeholder="Type your email..." />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Message</label>
+                <textarea required rows="4" class="form-input" placeholder="Type message payload..."></textarea>
+              </div>
+
+              <button type="submit" class="btn-purple" style="width: 100%; justify-content: center; cursor: pointer;">
+                Send Message 🚀
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer style="border-top: 1px solid var(--border-purple); padding: 2.5rem 0; text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+    <div>© 2026 <strong style="color:#ffffff;">KISHOREKUMAR K.T</strong> | ECE Student & Co-ordinator</div>
+    <div style="font-size: 0.8rem; margin-top: 0.25rem;">VSB Engineering College, Karur</div>
+  </footer>
+
+  <!-- ==========================================================================
+       RESUME VIEWER MODAL COMPONENT (WITH VIEW & DOWNLOAD METHODS)
+       ========================================================================== -->
+  <div id="resume-modal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(10, 5, 24, 0.9); backdrop-filter: blur(12px); display: none; align-items: center; justify-content: center; z-index: 100000; padding: 1.5rem;">
+    <div style="width: 100%; max-width: 900px; height: 90vh; background: #120827; border: 1px solid var(--border-purple); border-radius: 20px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.8); position: relative;">
+      
+      <!-- Modal Top Toolbar -->
+      <div style="padding: 1rem 1.5rem; background: rgba(10, 5, 24, 0.95); border-bottom: 1px solid var(--border-purple); display: flex; justify-content: space-between; align-items: center;">
+        <div style="font-family: var(--font-title); font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 0.5rem;">
+          📄 KISHOREKUMAR K.T - Resume Preview
+        </div>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <!-- METHOD 2 INSIDE MODAL: DIRECT DOWNLOAD BUTTON -->
+          <a href="./Kishorekumar_KT_Resume.pdf" download="Kishorekumar_KT_Resume.pdf" class="btn-purple" style="padding: 0.5rem 1.1rem; font-size: 0.85rem; text-decoration: none;">
+            📥 Download PDF
+          </a>
+          <button id="close-resume-modal" style="background: transparent; border: none; color: #ffffff; font-size: 1.8rem; cursor: pointer; line-height: 1; padding: 0 0.5rem;">&times;</button>
+        </div>
+      </div>
+
+  <!-- ==========================================================================
+       ADMIN LOGIN MODAL & CONTROL PANEL DRAWER
+       ========================================================================== -->
+  <!-- Admin Login Modal -->
+  <div id="admin-login-modal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(10, 5, 24, 0.92); backdrop-filter: blur(16px); display: none; align-items: center; justify-content: center; z-index: 100001; padding: 1.5rem;">
+    <div style="width: 100%; max-width: 420px; background: #120827; border: 1px solid var(--border-purple); border-radius: 20px; padding: 2.5rem; box-shadow: 0 25px 60px rgba(0,0,0,0.8); position: relative;">
+      <button id="close-admin-login" style="position: absolute; top: 1rem; right: 1.2rem; background: transparent; border: none; color: #ffffff; font-size: 1.8rem; cursor: pointer;">&times;</button>
+      
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <div style="font-size: 2.8rem; margin-bottom: 0.5rem;">🔐</div>
+        <h3 style="font-family: var(--font-title); font-size: 1.6rem; font-weight: 800; color: #ffffff;">Admin Access</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">Enter administrator credentials to edit live portfolio content</p>
+      </div>
+
+      <form id="admin-login-form">
+        <div class="form-group">
+          <label class="form-label">Admin Email</label>
+          <input type="email" id="admin-email-input" required class="form-input" placeholder="kishorekumarkt3@gmail.com" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="admin-pass-input" required class="form-input" placeholder="••••••••••••" />
+        </div>
+
+        <div id="admin-login-error" style="color: #ef4444; font-size: 0.85rem; margin-bottom: 1rem; display: none; text-align: center; font-weight: 600;">
+          ❌ Invalid Email or Password! Access Denied.
+        </div>
+
+        <button type="submit" class="btn-purple" style="width: 100%; justify-content: center; cursor: pointer; padding: 0.9rem;">
+          Authenticate & Unlock Panel 🚀
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Live Control Panel Modal -->
+  <div id="admin-control-modal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(10, 5, 24, 0.94); backdrop-filter: blur(20px); display: none; align-items: center; justify-content: center; z-index: 100002; padding: 1.5rem;">
+    <div style="width: 100%; max-width: 850px; height: 85vh; background: #120827; border: 1px solid var(--purple-accent); border-radius: 20px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 25px 60px rgba(118, 60, 172, 0.4);">
+      
+      <!-- Panel Header -->
+      <div style="padding: 1.25rem 2rem; background: rgba(10, 5, 24, 0.98); border-bottom: 1px solid var(--border-purple); display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <div style="font-family: var(--font-title); font-weight: 800; font-size: 1.2rem; color: #ffffff; display: flex; align-items: center; gap: 0.5rem;">
+            ⚙️ Live Portfolio Content Manager
+          </div>
+          <div style="font-size: 0.8rem; color: var(--purple-accent);">Authenticated as: kishorekumarkt3@gmail.com</div>
+        </div>
+        
+        <div style="display: flex; gap: 1rem; align-items: center;">
+          <button id="save-admin-changes" class="btn-purple" style="padding: 0.6rem 1.2rem; font-size: 0.85rem;">
+            💾 Save All Changes
+          </button>
+          <button id="logout-admin" class="btn-outline-purple" style="padding: 0.6rem 1rem; font-size: 0.85rem; border-color: #ef4444; color: #ef4444;">
+            🚪 Logout
+          </button>
+        </div>
+      </div>
+
+      <!-- Panel Body Editors -->
+      <div style="flex: 1; overflow-y: auto; padding: 2rem; display: flex; flex-direction: column; gap: 1.75rem;">
+        <!-- Edit Hero Section -->
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-purple); border-radius: 14px; padding: 1.5rem;">
+          <h4 style="font-family: var(--font-title); font-size: 1.1rem; color: var(--purple-accent); margin-bottom: 1rem;">1. Hero Section</h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div>
+              <label class="form-label">Full Name</label>
+              <input type="text" id="edit-hero-name" class="form-input" value="KISHOREKUMAR K.T" />
+            </div>
+            <div>
+              <label class="form-label">Subtitle / Title</label>
+              <input type="text" id="edit-hero-subtitle" class="form-input" value="ECE Student & Co-ordinator | Web Developer" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Edit About Section -->
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-purple); border-radius: 14px; padding: 1.5rem;">
+          <h4 style="font-family: var(--font-title); font-size: 1.1rem; color: var(--purple-accent); margin-bottom: 1rem;">2. About Me Biography</h4>
+          <div>
+            <label class="form-label">About Bio Paragraph</label>
+            <textarea id="edit-about-bio" rows="4" class="form-input">I'm KISHOREKUMAR K.T, a third-year Electronics and Communication Engineering student at VSB Engineering College, Karur. I'm passionate about web development, technology, and building practical solutions. I enjoy developing user-friendly applications and exploring new technologies while continuously improving my technical skills.</textarea>
+          </div>
+        </div>
+
+        <!-- Edit Education Section -->
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-purple); border-radius: 14px; padding: 1.5rem;">
+          <h4 style="font-family: var(--font-title); font-size: 1.1rem; color: var(--purple-accent); margin-bottom: 1rem;">3. Education & CGPA</h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+            <div>
+              <label class="form-label">College Name</label>
+              <input type="text" id="edit-edu-college" class="form-input" value="V.S.B ENGINEERING COLLEGE KARUR" />
+            </div>
+            <div>
+              <label class="form-label">Degree / Dept</label>
+              <input type="text" id="edit-edu-dept" class="form-input" value="B.E. Electronics and Communication Engineering" />
+            </div>
+            <div>
+              <label class="form-label">CGPA Score</label>
+              <input type="text" id="edit-edu-cgpa" class="form-input" value="7.5 / 10" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Edit Projects & Links -->
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-purple); border-radius: 14px; padding: 1.5rem;">
+          <h4 style="font-family: var(--font-title); font-size: 1.1rem; color: var(--purple-accent); margin-bottom: 1rem;">4. Project Links & Live Demo URLs</h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div>
+              <label class="form-label">Smart Agri Live Demo URL</label>
+              <input type="text" id="edit-proj-demo" class="form-input" value="https://smart-agri-transport-management1.vercel.app/" />
+            </div>
+            <div>
+              <label class="form-label">Smart Agri GitHub Repo URL</label>
+              <input type="text" id="edit-proj-github" class="form-input" value="https://github.com/kishorekumar-121" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Edit Contact Links -->
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-purple); border-radius: 14px; padding: 1.5rem;">
+          <h4 style="font-family: var(--font-title); font-size: 1.1rem; color: var(--purple-accent); margin-bottom: 1rem;">5. Contact Info & Social URLs</h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+            <div>
+              <label class="form-label">Email Address</label>
+              <input type="email" id="edit-contact-email" class="form-input" value="kishorekumarkt3@gmail.com" />
+            </div>
+            <div>
+              <label class="form-label">LinkedIn Profile URL</label>
+              <input type="text" id="edit-contact-linkedin" class="form-input" value="https://www.linkedin.com/in/kishorekumar-k-t-568738378/" />
+            </div>
+            <div>
+              <label class="form-label">GitHub Username / URL</label>
+              <input type="text" id="edit-contact-github" class="form-input" value="kishorekumar-121" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       INTERACTIVE JAVASCRIPT & SCROLL REVEAL ENGINE
+       ========================================================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Custom Purple Glow Cursor
+      const cursor = document.getElementById('custom-cursor');
+      if (cursor) {
+        window.addEventListener('mousemove', (e) => {
+          cursor.style.left = `${e.clientX}px`;
+          cursor.style.top = `${e.clientY}px`;
+        });
+        document.querySelectorAll('a, button, .skill-box, .project-card, .edu-card').forEach(el => {
+          el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+          el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+        });
+      }
+
+      // 2. IntersectionObserver Scroll Reveal
+      const reveals = document.querySelectorAll('.reveal-on-scroll');
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      reveals.forEach(el => observer.observe(el));
+
+      // 3. Navbar Active Link Scroll Tracker
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('.nav-link');
+      window.addEventListener('scroll', () => {
+        let current = '';
+        const scrollPos = window.scrollY + 160;
+        sections.forEach(sec => {
+          const top = sec.offsetTop;
+          const height = sec.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            current = sec.getAttribute('id');
+          }
+        });
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+          }
+        });
+      });
+
+      // 4. Contact Form Dispatch
+      const contactForm = document.getElementById('contact-form');
+      if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const btn = contactForm.querySelector('button[type="submit"]');
+          btn.textContent = 'Sending Message...';
+          btn.disabled = true;
+
+          setTimeout(() => {
+            btn.textContent = '✓ Message Sent Successfully!';
+            btn.style.background = '#22c55e';
+            contactForm.reset();
+
+            setTimeout(() => {
+              btn.textContent = 'Send Message 🚀';
+              btn.style.background = '';
+              btn.disabled = false;
+            }, 3500);
+          }, 1000);
+        });
+      }
+
+      // 5. Resume Modal Viewer Handler
+      const viewResumeBtn = document.getElementById('view-resume-btn');
+      const resumeModal = document.getElementById('resume-modal');
+      const closeResumeModal = document.getElementById('close-resume-modal');
+
+      if (viewResumeBtn && resumeModal) {
+        viewResumeBtn.addEventListener('click', (e) => {
+          if (window.innerWidth > 768) {
+            e.preventDefault();
+            resumeModal.style.display = 'flex';
+          }
+        });
+      }
+
+      if (closeResumeModal && resumeModal) {
+        closeResumeModal.addEventListener('click', () => {
+          resumeModal.style.display = 'none';
+        });
+
+        resumeModal.addEventListener('click', (e) => {
+          if (e.target === resumeModal) {
+            resumeModal.style.display = 'none';
+          }
+        });
+      }
+
+      // 6. Admin Panel Authentication & Live Content Manager Engine
+      const ADMIN_EMAIL = "kishorekumarkt3@gmail.com";
+      const ADMIN_PASS = "UNPX7DQRPK";
+
+      window.openAdminModal = function() {
+        const loginModal = document.getElementById('admin-login-modal');
+        const controlModal = document.getElementById('admin-control-modal');
+        if (localStorage.getItem('admin_authenticated') === 'true') {
+          if (controlModal) controlModal.style.display = 'flex';
+        } else {
+          if (loginModal) loginModal.style.display = 'flex';
+        }
+      };
+
+      window.closeAdminModal = function() {
+        const loginModal = document.getElementById('admin-login-modal');
+        const controlModal = document.getElementById('admin-control-modal');
+        const errorEl = document.getElementById('admin-login-error');
+        if (loginModal) loginModal.style.display = 'none';
+        if (controlModal) controlModal.style.display = 'none';
+        if (errorEl) errorEl.style.display = 'none';
+      };
+
+      const openAdminBtn = document.getElementById('open-admin-btn');
+      const adminLoginModal = document.getElementById('admin-login-modal');
+      const closeAdminLogin = document.getElementById('close-admin-login');
+      const adminLoginForm = document.getElementById('admin-login-form');
+      const adminEmailInput = document.getElementById('admin-email-input');
+      const adminPassInput = document.getElementById('admin-pass-input');
+      const adminLoginError = document.getElementById('admin-login-error');
+
+      const adminControlModal = document.getElementById('admin-control-modal');
+      const saveAdminChangesBtn = document.getElementById('save-admin-changes');
+      const logoutAdminBtn = document.getElementById('logout-admin');
+
+      // Check existing admin session in localStorage
+      if (localStorage.getItem('admin_authenticated') === 'true') {
+        if (openAdminBtn) openAdminBtn.innerHTML = '⚙️ Admin Panel';
+      }
+
+      if (closeAdminLogin) {
+        closeAdminLogin.addEventListener('click', window.closeAdminModal);
+      }
+
+      if (adminLoginForm) {
+        adminLoginForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const enteredEmail = adminEmailInput.value.trim().toLowerCase();
+          const enteredPass = adminPassInput.value.trim();
+
+          if (enteredEmail === ADMIN_EMAIL.toLowerCase() && enteredPass === ADMIN_PASS) {
+            localStorage.setItem('admin_authenticated', 'true');
+            if (adminLoginError) adminLoginError.style.display = 'none';
+            if (adminLoginModal) adminLoginModal.style.display = 'none';
+            if (adminControlModal) adminControlModal.style.display = 'flex';
+            if (openAdminBtn) openAdminBtn.innerHTML = '⚙️ Admin Panel';
+            adminLoginForm.reset();
+          } else {
+            if (adminLoginError) adminLoginError.style.display = 'block';
+          }
+        });
+      }
+
+      if (logoutAdminBtn) {
+        logoutAdminBtn.addEventListener('click', () => {
+          localStorage.removeItem('admin_authenticated');
+          if (adminControlModal) adminControlModal.style.display = 'none';
+          if (openAdminBtn) openAdminBtn.innerHTML = '🔐 Admin';
+        });
+      }
+
+      // 7. Load & Persist Admin Content with localStorage
+      function applySavedContent() {
+        try {
+          const savedData = JSON.parse(localStorage.getItem('portfolio_admin_content') || '{}');
+          if (savedData.name) {
+            document.querySelectorAll('.hero-name').forEach(el => el.textContent = savedData.name);
+            const editName = document.getElementById('edit-hero-name');
+            if (editName) editName.value = savedData.name;
+          }
+          if (savedData.subtitle) {
+            document.querySelectorAll('.hero-subtitle').forEach(el => el.textContent = savedData.subtitle);
+            const editSub = document.getElementById('edit-hero-subtitle');
+            if (editSub) editSub.value = savedData.subtitle;
+          }
+          if (savedData.bio) {
+            const aboutP = document.querySelector('#about .about-text-content p');
+            if (aboutP) aboutP.textContent = savedData.bio;
+            const editBio = document.getElementById('edit-about-bio');
+            if (editBio) editBio.value = savedData.bio;
+          }
+          if (savedData.college) {
+            const collegeEl = document.querySelector('.edu-college-title');
+            if (collegeEl) collegeEl.textContent = savedData.college;
+            const editCol = document.getElementById('edit-edu-college');
+            if (editCol) editCol.value = savedData.college;
+          }
+          if (savedData.dept) {
+            const deptEl = document.querySelector('.edu-dept');
+            if (deptEl) deptEl.textContent = savedData.dept;
+            const editDept = document.getElementById('edit-edu-dept');
+            if (editDept) editDept.value = savedData.dept;
+          }
+          if (savedData.cgpa) {
+            const cgpaEl = document.querySelector('.edu-meta-flex div:first-child');
+            if (cgpaEl) cgpaEl.innerHTML = `<strong>CGPA:</strong> ${savedData.cgpa}`;
+            const editCgpa = document.getElementById('edit-edu-cgpa');
+            if (editCgpa) editCgpa.value = savedData.cgpa;
+          }
+          if (savedData.demoUrl) {
+            const demoBtn = document.querySelector('a[href*="smart-agri"]');
+            if (demoBtn) demoBtn.href = savedData.demoUrl;
+            const editDemo = document.getElementById('edit-proj-demo');
+            if (editDemo) editDemo.value = savedData.demoUrl;
+          }
+          if (savedData.email) {
+            const emailItems = document.querySelectorAll('a[href^="mailto:"]');
+            emailItems.forEach(el => el.href = `mailto:${savedData.email}`);
+            const editEmail = document.getElementById('edit-contact-email');
+            if (editEmail) editEmail.value = savedData.email;
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      applySavedContent();
+
+      // Live Dynamic DOM Updates from Admin Panel Inputs
+      if (saveAdminChangesBtn) {
+        saveAdminChangesBtn.addEventListener('click', () => {
+          const newName = document.getElementById('edit-hero-name').value.trim();
+          const newSubtitle = document.getElementById('edit-hero-subtitle').value.trim();
+          const newBio = document.getElementById('edit-about-bio').value.trim();
+          const newCollege = document.getElementById('edit-edu-college').value.trim();
+          const newDept = document.getElementById('edit-edu-dept').value.trim();
+          const newCgpa = document.getElementById('edit-edu-cgpa').value.trim();
+          const newDemo = document.getElementById('edit-proj-demo').value.trim();
+          const newEmail = document.getElementById('edit-contact-email').value.trim();
+
+          const dataToSave = {
+            name: newName,
+            subtitle: newSubtitle,
+            bio: newBio,
+            college: newCollege,
+            dept: newDept,
+            cgpa: newCgpa,
+            demoUrl: newDemo,
+            email: newEmail
+          };
+
+          localStorage.setItem('portfolio_admin_content', JSON.stringify(dataToSave));
+          applySavedContent();
+
+          saveAdminChangesBtn.textContent = '✓ Changes Saved!';
+          saveAdminChangesBtn.style.background = '#22c55e';
+          setTimeout(() => {
+            saveAdminChangesBtn.textContent = '💾 Save All Changes';
+            saveAdminChangesBtn.style.background = '';
+            adminControlModal.style.display = 'none';
+          }, 1500);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
