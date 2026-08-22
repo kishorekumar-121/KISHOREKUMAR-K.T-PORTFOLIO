@@ -733,6 +733,11 @@
 </head>
 <body>
 
+  <!-- Separate Always-Visible Floating Admin Portal Button -->
+  <button id="floating-admin-portal" onclick="window.openAdminPortal()" style="position: fixed; bottom: 25px; right: 25px; z-index: 99999; padding: 0.8rem 1.5rem; background: linear-gradient(135deg, #763CAC, #320F85); color: #ffffff; font-family: var(--font-title); font-weight: 800; font-size: 0.95rem; border: 2px solid var(--purple-accent); border-radius: 50px; box-shadow: 0 10px 35px rgba(118, 60, 172, 0.7); cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: transform 0.2s ease;">
+    🔐 Admin Portal
+  </button>
+
   <!-- Ambient Glow Background -->
   <div class="ambient-glow"></div>
 
@@ -750,6 +755,7 @@
         <li><a href="#skills" class="nav-link">Skills</a></li>
         <li><a href="#projects" class="nav-link">Projects</a></li>
         <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li><button onclick="window.openAdminPortal()" class="nav-link" style="background:rgba(118,60,172,0.25); border:1px solid var(--purple-accent); border-radius:20px; padding:0.35rem 0.85rem; cursor:pointer; color:#ffffff; font-weight:700;">🔐 Admin Portal</button></li>
       </ul>
     </nav>
   </div>
