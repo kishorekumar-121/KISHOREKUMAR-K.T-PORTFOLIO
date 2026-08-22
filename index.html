@@ -1402,6 +1402,38 @@
         });
       }
 
+      // Image & PDF File Readers
+      const imgFileInput = document.getElementById('portal-img-file');
+      const imgUrlInput = document.getElementById('portal-img-url');
+      const pdfFileInput = document.getElementById('portal-pdf-file');
+      const pdfUrlInput = document.getElementById('portal-pdf-url');
+
+      if (imgFileInput) {
+        imgFileInput.addEventListener('change', (e) => {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              imgUrlInput.value = event.target.result;
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+      }
+
+      if (pdfFileInput) {
+        pdfFileInput.addEventListener('change', (e) => {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              pdfUrlInput.value = event.target.result;
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+      }
+
       // Load & Apply Saved Content
       function applyPortalSavedContent() {
         try {
@@ -1452,6 +1484,22 @@
             const inputEmail = document.getElementById('portal-contact-email');
             if (inputEmail) inputEmail.value = data.email;
           }
+          if (data.imgUrl) {
+            document.querySelectorAll('img').forEach(img => {
+              if (img.src.includes('profile')) img.src = data.imgUrl;
+            });
+            const inputImg = document.getElementById('portal-img-url');
+            if (inputImg) inputImg.value = data.imgUrl;
+          }
+          if (data.pdfUrl) {
+            document.querySelectorAll('a[href*="Resume"], a[download*="Resume"]').forEach(a => a.href = data.pdfUrl);
+            const pdfObj = document.querySelector('#resume-modal object');
+            if (pdfObj) pdfObj.data = data.pdfUrl;
+            const pdfFrame = document.querySelector('#resume-modal iframe');
+            if (pdfFrame) pdfFrame.src = data.pdfUrl;
+            const inputPdf = document.getElementById('portal-pdf-url');
+            if (inputPdf) inputPdf.value = data.pdfUrl;
+          }
         } catch (e) {
           console.error(e);
         }
@@ -1469,7 +1517,9 @@
             dept: document.getElementById('portal-edu-dept').value.trim(),
             cgpa: document.getElementById('portal-edu-cgpa').value.trim(),
             demoUrl: document.getElementById('portal-proj-demo').value.trim(),
-            email: document.getElementById('portal-contact-email').value.trim()
+            email: document.getElementById('portal-contact-email').value.trim(),
+            imgUrl: document.getElementById('portal-img-url').value.trim(),
+            pdfUrl: document.getElementById('portal-pdf-url').value.trim()
           };
 
           localStorage.setItem('admin_portal_data', JSON.stringify(newData));
