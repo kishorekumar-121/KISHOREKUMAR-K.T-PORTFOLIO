@@ -1312,6 +1312,127 @@
           }
         });
       }
+
+      // 6. Admin Portal Authentication & Live Content Manager Engine
+      const PORTAL_EMAIL = "kishorekumarkt3@gmail.com";
+      const PORTAL_PASS = "qazwsxedc";
+
+      const portalLoginForm = document.getElementById('admin-portal-login-form');
+      const portalEmailInput = document.getElementById('portal-email-input');
+      const portalPassInput = document.getElementById('portal-pass-input');
+      const portalError = document.getElementById('admin-portal-error');
+      const loginModalPortal = document.getElementById('admin-login-portal');
+      const controlModalPortal = document.getElementById('admin-control-portal');
+      const savePortalChangesBtn = document.getElementById('save-portal-changes');
+      const logoutPortalBtn = document.getElementById('logout-portal');
+
+      if (portalLoginForm) {
+        portalLoginForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const emailVal = portalEmailInput.value.trim().toLowerCase();
+          const passVal = portalPassInput.value.trim();
+
+          if (emailVal === PORTAL_EMAIL.toLowerCase() && passVal === PORTAL_PASS) {
+            localStorage.setItem('admin_portal_authenticated', 'true');
+            if (portalError) portalError.style.display = 'none';
+            if (loginModalPortal) loginModalPortal.style.display = 'none';
+            if (controlModalPortal) controlModalPortal.style.display = 'flex';
+            portalLoginForm.reset();
+          } else {
+            if (portalError) portalError.style.display = 'block';
+          }
+        });
+      }
+
+      if (logoutPortalBtn) {
+        logoutPortalBtn.addEventListener('click', () => {
+          localStorage.removeItem('admin_portal_authenticated');
+          if (controlModalPortal) controlModalPortal.style.display = 'none';
+        });
+      }
+
+      // Load & Apply Saved Content
+      function applyPortalSavedContent() {
+        try {
+          const data = JSON.parse(localStorage.getItem('admin_portal_data') || '{}');
+          if (data.name) {
+            document.querySelectorAll('.hero-name').forEach(el => el.textContent = data.name);
+            const inputName = document.getElementById('portal-hero-name');
+            if (inputName) inputName.value = data.name;
+          }
+          if (data.subtitle) {
+            document.querySelectorAll('.hero-subtitle').forEach(el => el.textContent = data.subtitle);
+            const inputSub = document.getElementById('portal-hero-subtitle');
+            if (inputSub) inputSub.value = data.subtitle;
+          }
+          if (data.bio) {
+            const bioEl = document.querySelector('#about .about-text-content p');
+            if (bioEl) bioEl.textContent = data.bio;
+            const inputBio = document.getElementById('portal-about-bio');
+            if (inputBio) inputBio.value = data.bio;
+          }
+          if (data.college) {
+            const colEl = document.querySelector('.edu-college-title');
+            if (colEl) colEl.textContent = data.college;
+            const inputCol = document.getElementById('portal-edu-college');
+            if (inputCol) inputCol.value = data.college;
+          }
+          if (data.dept) {
+            const deptEl = document.querySelector('.edu-dept');
+            if (deptEl) deptEl.textContent = data.dept;
+            const inputDept = document.getElementById('portal-edu-dept');
+            if (inputDept) inputDept.value = data.dept;
+          }
+          if (data.cgpa) {
+            const cgpaEl = document.querySelector('.edu-meta-flex div:first-child');
+            if (cgpaEl) cgpaEl.innerHTML = `<strong>CGPA:</strong> ${data.cgpa}`;
+            const inputCgpa = document.getElementById('portal-edu-cgpa');
+            if (inputCgpa) inputCgpa.value = data.cgpa;
+          }
+          if (data.demoUrl) {
+            const demoLink = document.querySelector('a[href*="smart-agri"]');
+            if (demoLink) demoLink.href = data.demoUrl;
+            const inputDemo = document.getElementById('portal-proj-demo');
+            if (inputDemo) inputDemo.value = data.demoUrl;
+          }
+          if (data.email) {
+            const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
+            emailLinks.forEach(a => a.href = `mailto:${data.email}`);
+            const inputEmail = document.getElementById('portal-contact-email');
+            if (inputEmail) inputEmail.value = data.email;
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      applyPortalSavedContent();
+
+      if (savePortalChangesBtn) {
+        savePortalChangesBtn.addEventListener('click', () => {
+          const newData = {
+            name: document.getElementById('portal-hero-name').value.trim(),
+            subtitle: document.getElementById('portal-hero-subtitle').value.trim(),
+            bio: document.getElementById('portal-about-bio').value.trim(),
+            college: document.getElementById('portal-edu-college').value.trim(),
+            dept: document.getElementById('portal-edu-dept').value.trim(),
+            cgpa: document.getElementById('portal-edu-cgpa').value.trim(),
+            demoUrl: document.getElementById('portal-proj-demo').value.trim(),
+            email: document.getElementById('portal-contact-email').value.trim()
+          };
+
+          localStorage.setItem('admin_portal_data', JSON.stringify(newData));
+          applyPortalSavedContent();
+
+          savePortalChangesBtn.textContent = '✓ Changes Saved & Published!';
+          savePortalChangesBtn.style.background = '#22c55e';
+          setTimeout(() => {
+            savePortalChangesBtn.textContent = '💾 Save & Publish Changes';
+            savePortalChangesBtn.style.background = '';
+            if (controlModalPortal) controlModalPortal.style.display = 'none';
+          }, 1500);
+        });
+      }
     });
   </script>
 </body>
