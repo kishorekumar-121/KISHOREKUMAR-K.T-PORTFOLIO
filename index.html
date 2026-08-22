@@ -1354,6 +1354,37 @@
         });
       }
 
+      // Click-to-Edit Mode Handler for Full Website Editing
+      const toggleEditableBtn = document.getElementById('toggle-live-editable');
+      let isLiveEditActive = false;
+
+      if (toggleEditableBtn) {
+        toggleEditableBtn.addEventListener('click', () => {
+          isLiveEditActive = !isLiveEditActive;
+          const editableTargets = document.querySelectorAll('h1, h2, h3, h4, p, span, li, a.nav-link, .project-title, .edu-college-title');
+          editableTargets.forEach(el => {
+            if (isLiveEditActive) {
+              el.setAttribute('contenteditable', 'true');
+              el.style.outline = '1px dashed #facc15';
+            } else {
+              el.removeAttribute('contenteditable');
+              el.style.outline = '';
+            }
+          });
+
+          if (isLiveEditActive) {
+            toggleEditableBtn.textContent = '🔒 Lock Click-to-Edit Mode';
+            toggleEditableBtn.style.background = '#eab308';
+            toggleEditableBtn.style.color = '#000000';
+            if (controlModalPortal) controlModalPortal.style.display = 'none';
+          } else {
+            toggleEditableBtn.textContent = '✏️ Enable Click-to-Edit Mode';
+            toggleEditableBtn.style.background = '';
+            toggleEditableBtn.style.color = '#facc15';
+          }
+        });
+      }
+
       // Load & Apply Saved Content
       function applyPortalSavedContent() {
         try {
