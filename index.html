@@ -1515,11 +1515,29 @@
             const inputDemo = document.getElementById('portal-proj-demo');
             if (inputDemo) inputDemo.value = data.demoUrl;
           }
+          if (data.githubUrl) {
+            const gitProjLink = document.querySelector('.project-card a[href*="github.com"]');
+            if (gitProjLink) gitProjLink.href = data.githubUrl;
+            const inputGitProj = document.getElementById('portal-proj-github');
+            if (inputGitProj) inputGitProj.value = data.githubUrl;
+          }
           if (data.email) {
             const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
             emailLinks.forEach(a => a.href = `mailto:${data.email}`);
             const inputEmail = document.getElementById('portal-contact-email');
             if (inputEmail) inputEmail.value = data.email;
+          }
+          if (data.linkedin) {
+            const linkedinLinks = document.querySelectorAll('a[href*="linkedin.com"]');
+            linkedinLinks.forEach(a => a.href = data.linkedin);
+            const inputLinkedin = document.getElementById('portal-contact-linkedin');
+            if (inputLinkedin) inputLinkedin.value = data.linkedin;
+          }
+          if (data.contactGithub) {
+            const gitSocialLinks = document.querySelectorAll('#contact a[href*="github.com"]');
+            gitSocialLinks.forEach(a => a.href = data.contactGithub.startsWith('http') ? data.contactGithub : `https://github.com/${data.contactGithub}`);
+            const inputContactGit = document.getElementById('portal-contact-github');
+            if (inputContactGit) inputContactGit.value = data.contactGithub;
           }
           if (data.imgUrl) {
             document.querySelectorAll('img').forEach(img => {
@@ -1540,6 +1558,40 @@
         } catch (e) {
           console.error(e);
         }
+      }
+
+      applyPortalSavedContent();
+
+      // Save & Publish Changes Event Listener
+      if (savePortalChangesBtn) {
+        savePortalChangesBtn.addEventListener('click', () => {
+          const newData = {
+            name: document.getElementById('portal-hero-name') ? document.getElementById('portal-hero-name').value.trim() : '',
+            subtitle: document.getElementById('portal-hero-subtitle') ? document.getElementById('portal-hero-subtitle').value.trim() : '',
+            bio: document.getElementById('portal-about-bio') ? document.getElementById('portal-about-bio').value.trim() : '',
+            college: document.getElementById('portal-edu-college') ? document.getElementById('portal-edu-college').value.trim() : '',
+            dept: document.getElementById('portal-edu-dept') ? document.getElementById('portal-edu-dept').value.trim() : '',
+            cgpa: document.getElementById('portal-edu-cgpa') ? document.getElementById('portal-edu-cgpa').value.trim() : '',
+            demoUrl: document.getElementById('portal-proj-demo') ? document.getElementById('portal-proj-demo').value.trim() : '',
+            githubUrl: document.getElementById('portal-proj-github') ? document.getElementById('portal-proj-github').value.trim() : '',
+            email: document.getElementById('portal-contact-email') ? document.getElementById('portal-contact-email').value.trim() : '',
+            linkedin: document.getElementById('portal-contact-linkedin') ? document.getElementById('portal-contact-linkedin').value.trim() : '',
+            contactGithub: document.getElementById('portal-contact-github') ? document.getElementById('portal-contact-github').value.trim() : '',
+            imgUrl: document.getElementById('portal-img-url') ? document.getElementById('portal-img-url').value.trim() : '',
+            pdfUrl: document.getElementById('portal-pdf-url') ? document.getElementById('portal-pdf-url').value.trim() : ''
+          };
+
+          localStorage.setItem('admin_portal_data', JSON.stringify(newData));
+          applyPortalSavedContent();
+
+          savePortalChangesBtn.textContent = '✓ Changes Saved & Published!';
+          savePortalChangesBtn.style.background = '#22c55e';
+          setTimeout(() => {
+            savePortalChangesBtn.textContent = '💾 Save & Publish Changes';
+            savePortalChangesBtn.style.background = '';
+            if (controlModalPortal) controlModalPortal.style.display = 'none';
+          }, 1500);
+        });
       }
 
       // Dynamic New Project Card Generator
