@@ -1404,6 +1404,10 @@
         const savedData = JSON.parse(localStorage.getItem('admin_portal_data') || '{}');
         const pdfUrl = savedData.pdfUrl || './Kishorekumar_KT_Resume.pdf';
         
+        // 1. Open PDF in clean browser tab
+        window.open(pdfUrl, '_blank');
+
+        // 2. Open interactive modal with fallback links
         if (resumeModal) resumeModal.style.display = 'flex';
         if (resumeIframe) {
           resumeIframe.src = pdfUrl;
@@ -1411,8 +1415,13 @@
 
         const openTabLink = document.getElementById('modal-open-newtab');
         const downloadLink = document.getElementById('modal-download-pdf');
+        const fallbackTab = document.getElementById('fallback-open-tab');
+        const fallbackDown = document.getElementById('fallback-download-btn');
+
         if (openTabLink) openTabLink.href = pdfUrl;
         if (downloadLink) downloadLink.href = pdfUrl;
+        if (fallbackTab) fallbackTab.href = pdfUrl;
+        if (fallbackDown) fallbackDown.href = pdfUrl;
       }
 
       if (viewResumeBtn) {
