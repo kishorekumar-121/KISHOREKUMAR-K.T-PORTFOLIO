@@ -1228,6 +1228,44 @@
             </div>
           </div>
         </div>
+
+        <!-- Add Custom New Project & Extra Details -->
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-purple); border-radius: 14px; padding: 1.5rem;">
+          <h4 style="font-family: var(--font-title); font-size: 1.1rem; color: var(--purple-accent); margin-bottom: 1rem;">7. ➕ Add Brand New Project to Website</h4>
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div>
+                <label class="form-label">New Project Title</label>
+                <input type="text" id="new-proj-title" class="form-input" placeholder="e.g. Smart IoT Monitoring System" />
+              </div>
+              <div>
+                <label class="form-label">Subheading / Category</label>
+                <input type="text" id="new-proj-subtitle" class="form-input" placeholder="e.g. Embedded & Web Application" />
+              </div>
+            </div>
+            <div>
+              <label class="form-label">Project Description</label>
+              <textarea id="new-proj-desc" rows="3" class="form-input" placeholder="Detailed description of your new project..."></textarea>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+              <div>
+                <label class="form-label">Tech Stack Tags (Comma-separated)</label>
+                <input type="text" id="new-proj-tags" class="form-input" placeholder="React, Node.js, Arduino" />
+              </div>
+              <div>
+                <label class="form-label">Live Demo URL</label>
+                <input type="text" id="new-proj-demo" class="form-input" placeholder="https://my-demo-site.vercel.app/" />
+              </div>
+              <div>
+                <label class="form-label">GitHub Repo URL</label>
+                <input type="text" id="new-proj-github" class="form-input" placeholder="https://github.com/kishorekumar-121/repo" />
+              </div>
+            </div>
+            <button type="button" id="btn-add-new-project" class="btn-purple" style="width: 100%; justify-content: center; margin-top: 0.5rem; padding: 0.8rem; cursor: pointer;">
+              🚀 Add This Project to Website Cards
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
