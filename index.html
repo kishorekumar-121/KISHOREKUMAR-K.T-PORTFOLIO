@@ -1105,8 +1105,17 @@
       </div>
 
       <!-- Embedded Dynamic PDF Frame Container -->
-      <div style="flex: 1; width: 100%; height: 100%; background: #ffffff; position: relative;">
-        <iframe id="resume-iframe" src="about:blank" style="width: 100%; height: 100%; border: none;"></iframe>
+      <div style="flex: 1; width: 100%; height: 100%; background: #0f0721; position: relative; display: flex; flex-direction: column;">
+        <div style="padding: 1.25rem 1.5rem; text-align: center; background: rgba(118,60,172,0.15); border-bottom: 1px solid var(--border-purple); display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+          <span style="color: #ffffff; font-size: 0.95rem; font-weight: 600;">📄 Kishorekumar K.T - Resume PDF</span>
+          <a id="fallback-open-tab" href="./Kishorekumar_KT_Resume.pdf" target="_blank" rel="noopener" class="btn-purple" style="padding: 0.5rem 1.2rem; font-size: 0.85rem; text-decoration: none;">
+            👁️ Open Full PDF in Browser Window
+          </a>
+          <a id="fallback-download-btn" href="./Kishorekumar_KT_Resume.pdf" download="Kishorekumar_KT_Resume.pdf" class="btn-outline-purple" style="padding: 0.5rem 1.2rem; font-size: 0.85rem; text-decoration: none;">
+            📥 Download PDF Document
+          </a>
+        </div>
+        <iframe id="resume-iframe" src="about:blank" style="flex: 1; width: 100%; border: none; background: #ffffff;"></iframe>
       </div>
     </div>
   </div>
