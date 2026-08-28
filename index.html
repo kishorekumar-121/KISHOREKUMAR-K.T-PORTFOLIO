@@ -1388,24 +1388,38 @@
       const viewResumeBtn = document.getElementById('view-resume-btn');
       const resumeModal = document.getElementById('resume-modal');
       const closeResumeModal = document.getElementById('close-resume-modal');
+      const resumeIframe = document.getElementById('resume-iframe');
 
-      if (viewResumeBtn && resumeModal) {
-        viewResumeBtn.addEventListener('click', (e) => {
-          if (window.innerWidth > 768) {
-            e.preventDefault();
-            resumeModal.style.display = 'flex';
-          }
-        });
+      function openPdfViewerModal(e) {
+        if (e) e.preventDefault();
+        const savedData = JSON.parse(localStorage.getItem('admin_portal_data') || '{}');
+        const pdfUrl = savedData.pdfUrl || './Kishorekumar_KT_Resume.pdf';
+        
+        if (resumeModal) resumeModal.style.display = 'flex';
+        if (resumeIframe) {
+          resumeIframe.src = pdfUrl;
+        }
+
+        const openTabLink = document.getElementById('modal-open-newtab');
+        const downloadLink = document.getElementById('modal-download-pdf');
+        if (openTabLink) openTabLink.href = pdfUrl;
+        if (downloadLink) downloadLink.href = pdfUrl;
+      }
+
+      if (viewResumeBtn) {
+        viewResumeBtn.addEventListener('click', openPdfViewerModal);
       }
 
       if (closeResumeModal && resumeModal) {
         closeResumeModal.addEventListener('click', () => {
           resumeModal.style.display = 'none';
+          if (resumeIframe) resumeIframe.src = 'about:blank';
         });
 
         resumeModal.addEventListener('click', (e) => {
           if (e.target === resumeModal) {
             resumeModal.style.display = 'none';
+            if (resumeIframe) resumeIframe.src = 'about:blank';
           }
         });
       }
