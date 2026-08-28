@@ -9,6 +9,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
+  <!-- PDF.js HTML5 Canvas Rendering Engine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
   <script>
     window.openAdminPortal = function() {
       var m = document.getElementById('admin-login-portal');
@@ -1104,18 +1107,11 @@
         </div>
       </div>
 
-      <!-- Embedded Dynamic PDF Frame Container -->
-      <div style="flex: 1; width: 100%; height: 100%; background: #0f0721; position: relative; display: flex; flex-direction: column;">
-        <div style="padding: 1.25rem 1.5rem; text-align: center; background: rgba(118,60,172,0.15); border-bottom: 1px solid var(--border-purple); display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-          <span style="color: #ffffff; font-size: 0.95rem; font-weight: 600;">📄 Kishorekumar K.T - Resume PDF</span>
-          <a id="fallback-open-tab" href="./Kishorekumar_KT_Resume.pdf" target="_blank" rel="noopener" class="btn-purple" style="padding: 0.5rem 1.2rem; font-size: 0.85rem; text-decoration: none;">
-            👁️ Open Full PDF in Browser Window
-          </a>
-          <a id="fallback-download-btn" href="./Kishorekumar_KT_Resume.pdf" download="Kishorekumar_KT_Resume.pdf" class="btn-outline-purple" style="padding: 0.5rem 1.2rem; font-size: 0.85rem; text-decoration: none;">
-            📥 Download PDF Document
-          </a>
-        </div>
-        <iframe id="resume-iframe" src="about:blank" style="flex: 1; width: 100%; border: none; background: #ffffff;"></iframe>
+      <!-- Canvas & Interactive PDF Viewer Container -->
+      <div style="flex: 1; width: 100%; height: 100%; background: #0b0518; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 1.5rem; position: relative;">
+        <div id="pdf-loading-text" style="color: var(--purple-accent); font-weight: 600; margin-bottom: 1rem;">⚡ Rendering Resume Document...</div>
+        <canvas id="pdf-render-canvas" style="box-shadow: 0 15px 40px rgba(0,0,0,0.8); border-radius: 10px; max-width: 100%; height: auto; display: block; background: #ffffff;"></canvas>
+        <iframe id="resume-iframe" src="about:blank" style="width: 100%; height: 500px; border: none; background: #ffffff; display: none; margin-top: 1rem;"></iframe>
       </div>
     </div>
   </div>
@@ -1393,35 +1389,57 @@
         });
       }
 
-      // 5. Resume Modal Viewer Handler
+      // 5. Resume Modal Viewer Handler (PDF.js Canvas Renderer Engine)
       const viewResumeBtn = document.getElementById('view-resume-btn');
       const resumeModal = document.getElementById('resume-modal');
       const closeResumeModal = document.getElementById('close-resume-modal');
-      const resumeIframe = document.getElementById('resume-iframe');
+      const pdfCanvas = document.getElementById('pdf-render-canvas');
+      const pdfLoadingText = document.getElementById('pdf-loading-text');
+
+      if (window.pdfjsLib) {
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      }
+
+      function renderPdfCanvas(url) {
+        if (!window.pdfjsLib || !pdfCanvas) return;
+        if (pdfLoadingText) pdfLoadingText.style.display = 'block';
+
+        window.pdfjsLib.getDocument(url).promise.then(pdf => {
+          pdf.getPage(1).then(page => {
+            const scale = window.innerWidth < 600 ? 0.9 : 1.4;
+            const viewport = page.getViewport({ scale: scale });
+            const context = pdfCanvas.getContext('2d');
+            pdfCanvas.height = viewport.height;
+            pdfCanvas.width = viewport.width;
+
+            const renderContext = {
+              canvasContext: context,
+              viewport: viewport
+            };
+            page.render(renderContext).promise.then(() => {
+              if (pdfLoadingText) pdfLoadingText.style.display = 'none';
+            });
+          });
+        }).catch(err => {
+          console.error('PDF.js Canvas error:', err);
+          if (pdfLoadingText) pdfLoadingText.textContent = '📄 Click "Open in New Tab" or "Download PDF" above to view document.';
+        });
+      }
 
       function openPdfViewerModal(e) {
         if (e) e.preventDefault();
         const savedData = JSON.parse(localStorage.getItem('admin_portal_data') || '{}');
         const pdfUrl = savedData.pdfUrl || './Kishorekumar_KT_Resume.pdf';
         
-        // 1. Open PDF in clean browser tab
-        window.open(pdfUrl, '_blank');
-
-        // 2. Open interactive modal with fallback links
         if (resumeModal) resumeModal.style.display = 'flex';
-        if (resumeIframe) {
-          resumeIframe.src = pdfUrl;
-        }
 
         const openTabLink = document.getElementById('modal-open-newtab');
         const downloadLink = document.getElementById('modal-download-pdf');
-        const fallbackTab = document.getElementById('fallback-open-tab');
-        const fallbackDown = document.getElementById('fallback-download-btn');
 
         if (openTabLink) openTabLink.href = pdfUrl;
         if (downloadLink) downloadLink.href = pdfUrl;
-        if (fallbackTab) fallbackTab.href = pdfUrl;
-        if (fallbackDown) fallbackDown.href = pdfUrl;
+
+        renderPdfCanvas(pdfUrl);
       }
 
       if (viewResumeBtn) {
@@ -1431,13 +1449,11 @@
       if (closeResumeModal && resumeModal) {
         closeResumeModal.addEventListener('click', () => {
           resumeModal.style.display = 'none';
-          if (resumeIframe) resumeIframe.src = 'about:blank';
         });
 
         resumeModal.addEventListener('click', (e) => {
           if (e.target === resumeModal) {
             resumeModal.style.display = 'none';
-            if (resumeIframe) resumeIframe.src = 'about:blank';
           }
         });
       }
