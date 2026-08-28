@@ -1766,6 +1766,7 @@
           localStorage.setItem('admin_custom_projects', JSON.stringify(customProjs));
 
           renderCustomProjects();
+          updateAdminProjectsManager();
 
           addProjectBtn.textContent = '✓ New Project Added!';
           addProjectBtn.style.background = '#22c55e';
@@ -1781,6 +1782,77 @@
           }, 1500);
         });
       }
+
+      // 8. Admin Projects List & Remove Project Manager Engine
+      const adminProjectsList = document.getElementById('admin-projects-list');
+
+      function updateAdminProjectsManager() {
+        if (!adminProjectsList) return;
+        adminProjectsList.innerHTML = '';
+
+        const projectCards = document.querySelectorAll('.projects-grid .project-card');
+        const removedTitles = JSON.parse(localStorage.getItem('admin_removed_projects') || '[]');
+
+        projectCards.forEach((card, idx) => {
+          const titleEl = card.querySelector('.project-title') || card.querySelector('.project-card-title');
+          const title = titleEl ? titleEl.textContent.trim() : `Project ${idx + 1}`;
+          
+          if (removedTitles.includes(title)) {
+            card.style.display = 'none';
+            return;
+          } else {
+            card.style.display = '';
+          }
+
+          const item = document.createElement('div');
+          item.style.cssText = 'display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.04); border: 1px solid var(--border-purple); border-radius: 8px; padding: 0.75rem 1rem; gap: 1rem;';
+          item.innerHTML = `
+            <div style="font-weight: 600; color: #ffffff; font-size: 0.95rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+              📌 ${title}
+            </div>
+            <button type="button" class="btn-remove-proj" data-title="${title}" data-id="${card.id}" style="background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; font-size: 0.8rem; font-weight: 700; padding: 0.4rem 0.85rem; border-radius: 6px; cursor: pointer; transition: all 0.2s;">
+              🗑️ Remove Project
+            </button>
+          `;
+          adminProjectsList.appendChild(item);
+        });
+
+        adminProjectsList.querySelectorAll('.btn-remove-proj').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const pTitle = e.target.getAttribute('data-title');
+            const pId = e.target.getAttribute('data-id');
+
+            if (confirm(`Are you sure you want to remove "${pTitle}" from your website?`)) {
+              const removed = JSON.parse(localStorage.getItem('admin_removed_projects') || '[]');
+              if (!removed.includes(pTitle)) {
+                removed.push(pTitle);
+                localStorage.setItem('admin_removed_projects', JSON.stringify(removed));
+              }
+
+              if (pId && pId.startsWith('proj-card-')) {
+                const customId = parseInt(pId.replace('proj-card-', ''));
+                let customProjs = JSON.parse(localStorage.getItem('admin_custom_projects') || '[]');
+                customProjs = customProjs.filter(p => p.id !== customId);
+                localStorage.setItem('admin_custom_projects', JSON.stringify(customProjs));
+              }
+
+              if (pId && document.getElementById(pId)) {
+                document.getElementById(pId).remove();
+              } else {
+                document.querySelectorAll('.projects-grid .project-card').forEach(c => {
+                  const t = c.querySelector('.project-title') || c.querySelector('.project-card-title');
+                  if (t && t.textContent.trim() === pTitle) c.style.display = 'none';
+                });
+              }
+
+              updateAdminProjectsManager();
+            }
+          });
+        });
+      }
+
+      // Initialize Projects List in Admin Panel
+      setTimeout(updateAdminProjectsManager, 200);
     });
   </script>
 </body>
