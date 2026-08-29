@@ -1649,10 +1649,6 @@
           }
           if (data.pdfUrl) {
             document.querySelectorAll('a[href*="Resume"], a[download*="Resume"]').forEach(a => a.href = data.pdfUrl);
-            const pdfObj = document.querySelector('#resume-modal object');
-            if (pdfObj) pdfObj.data = data.pdfUrl;
-            const pdfFrame = document.querySelector('#resume-modal iframe');
-            if (pdfFrame) pdfFrame.src = data.pdfUrl;
             const inputPdf = document.getElementById('portal-pdf-url');
             if (inputPdf) inputPdf.value = data.pdfUrl;
           }
