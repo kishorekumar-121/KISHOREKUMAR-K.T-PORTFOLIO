@@ -1695,39 +1695,46 @@
         });
       }
 
-      // Dynamic New Project Card Generator
+      // Dynamic New Project Card Generator Engine
       const addProjectBtn = document.getElementById('btn-add-new-project');
-      const projectsGrid = document.querySelector('.projects-grid');
 
       function renderCustomProjects() {
         try {
+          const grid = document.querySelector('.projects-grid');
+          if (!grid) return;
+
           const customProjs = JSON.parse(localStorage.getItem('admin_custom_projects') || '[]');
+          const removedTitles = JSON.parse(localStorage.getItem('admin_removed_projects') || '[]');
+
           customProjs.forEach(proj => {
+            if (removedTitles.includes(proj.title)) return;
             if (document.getElementById(`proj-card-${proj.id}`)) return;
 
             const card = document.createElement('div');
             card.className = 'project-card reveal-on-scroll is-visible';
             card.id = `proj-card-${proj.id}`;
+            card.style.cssText = 'display: flex; flex-direction: column; opacity: 1; transform: translateY(0);';
 
-            const tagsHtml = proj.tags.map(t => `<span class="tag">${t.trim()}</span>`).join('');
-            const demoBtnHtml = proj.demo ? `<a href="${proj.demo}" target="_blank" class="btn-purple" style="padding: 0.5rem 1rem; font-size: 0.8rem; text-decoration: none;">🌐 Live Demo</a>` : '';
-            const githubBtnHtml = proj.github ? `<a href="${proj.github}" target="_blank" class="btn-outline-purple" style="padding: 0.5rem 1rem; font-size: 0.8rem; text-decoration: none;">📦 GitHub Repo</a>` : '';
+            const tagsArray = Array.isArray(proj.tags) ? proj.tags : (proj.tags ? proj.tags.split(',') : ['Web Development']);
+            const tagsHtml = tagsArray.map(t => `<span class="tech-pill">${t.trim()}</span>`).join('');
+            const demoBtnHtml = proj.demo ? `<a href="${proj.demo}" target="_blank" rel="noopener" class="btn-purple" style="padding: 0.5rem 1rem; font-size: 0.8rem; text-decoration: none;">🌐 Live Demo</a>` : '';
+            const githubBtnHtml = proj.github ? `<a href="${proj.github}" target="_blank" rel="noopener" class="btn-outline-purple" style="padding: 0.5rem 1rem; font-size: 0.8rem; text-decoration: none;">📦 GitHub Repo</a>` : '';
 
             card.innerHTML = `
               <div class="project-header-box" style="padding: 1.5rem; background: rgba(118, 60, 172, 0.1); border-bottom: 1px solid var(--border-purple);">
-                <div style="font-size: 0.8rem; color: var(--purple-accent); font-weight: 700; text-transform: uppercase; margin-bottom: 0.25rem;">${proj.subtitle}</div>
+                <div style="font-size: 0.8rem; color: var(--purple-accent); font-weight: 700; text-transform: uppercase; margin-bottom: 0.25rem;">${proj.subtitle || 'Web Application'}</div>
                 <h3 class="project-title" style="font-family: var(--font-title); font-size: 1.3rem; color: #ffffff;">${proj.title}</h3>
               </div>
               <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; flex: 1;">
-                <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">${proj.desc}</p>
-                <div class="project-tags" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">${tagsHtml}</div>
+                <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">${proj.desc || 'A custom project developed by Kishorekumar K.T.'}</p>
+                <div class="tech-pill-list" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">${tagsHtml}</div>
                 <div style="margin-top: auto; display: flex; gap: 0.75rem; flex-wrap: wrap;">
                   ${demoBtnHtml}
                   ${githubBtnHtml}
                 </div>
               </div>
             `;
-            if (projectsGrid) projectsGrid.appendChild(card);
+            grid.appendChild(card);
           });
         } catch (err) {
           console.error(err);
@@ -1739,18 +1746,18 @@
       if (addProjectBtn) {
         addProjectBtn.addEventListener('click', () => {
           const title = document.getElementById('new-proj-title').value.trim();
-          const subtitle = document.getElementById('new-proj-subtitle').value.trim() || 'New Project';
-          const desc = document.getElementById('new-proj-desc').value.trim();
+          const subtitle = document.getElementById('new-proj-subtitle').value.trim() || 'Custom Project';
+          const desc = document.getElementById('new-proj-desc').value.trim() || 'A modern web and technology project created by Kishorekumar K.T.';
           const tagsStr = document.getElementById('new-proj-tags').value.trim();
           const demo = document.getElementById('new-proj-demo').value.trim();
           const github = document.getElementById('new-proj-github').value.trim();
 
-          if (!title || !desc) {
-            alert('Please enter at least a Project Title and Description.');
+          if (!title) {
+            alert('Please enter a Project Title.');
             return;
           }
 
-          const tags = tagsStr ? tagsStr.split(',') : ['Web App'];
+          const tags = tagsStr ? tagsStr.split(',') : ['Web Development', 'JavaScript'];
           const newProj = {
             id: Date.now(),
             title,
@@ -1768,7 +1775,7 @@
           renderCustomProjects();
           updateAdminProjectsManager();
 
-          addProjectBtn.textContent = '✓ New Project Added!';
+          addProjectBtn.textContent = '✓ New Project Added to Website!';
           addProjectBtn.style.background = '#22c55e';
           setTimeout(() => {
             addProjectBtn.textContent = '🚀 Add This Project to Website Cards';
