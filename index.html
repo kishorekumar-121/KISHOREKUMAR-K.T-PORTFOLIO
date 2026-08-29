@@ -1616,11 +1616,11 @@
             const inputDemo = document.getElementById('portal-proj-demo');
             if (inputDemo) inputDemo.value = data.demoUrl;
           }
-          if (data.githubUrl) {
-            const gitProjLink = document.querySelector('.project-card a[href*="github.com"]');
-            if (gitProjLink) gitProjLink.href = data.githubUrl;
-            const inputGitProj = document.getElementById('portal-proj-github');
-            if (inputGitProj) inputGitProj.value = data.githubUrl;
+          if (data.collegeDemoUrl) {
+            const collegeDemoLink = document.querySelector('a[href*="vsbec.com"]');
+            if (collegeDemoLink) collegeDemoLink.href = data.collegeDemoUrl;
+            const inputCollegeDemo = document.getElementById('portal-college-demo');
+            if (inputCollegeDemo) inputCollegeDemo.value = data.collegeDemoUrl;
           }
           if (data.email) {
             const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
@@ -1674,7 +1674,7 @@
             dept: document.getElementById('portal-edu-dept') ? document.getElementById('portal-edu-dept').value.trim() : '',
             cgpa: document.getElementById('portal-edu-cgpa') ? document.getElementById('portal-edu-cgpa').value.trim() : '',
             demoUrl: document.getElementById('portal-proj-demo') ? document.getElementById('portal-proj-demo').value.trim() : '',
-            githubUrl: document.getElementById('portal-proj-github') ? document.getElementById('portal-proj-github').value.trim() : '',
+            collegeDemoUrl: document.getElementById('portal-college-demo') ? document.getElementById('portal-college-demo').value.trim() : '',
             email: document.getElementById('portal-contact-email') ? document.getElementById('portal-contact-email').value.trim() : '',
             linkedin: document.getElementById('portal-contact-linkedin') ? document.getElementById('portal-contact-linkedin').value.trim() : '',
             contactGithub: document.getElementById('portal-contact-github') ? document.getElementById('portal-contact-github').value.trim() : '',
